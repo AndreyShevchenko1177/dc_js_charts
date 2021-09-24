@@ -1,22 +1,50 @@
-import * as dc from 'dc';
-import * as d3 from 'd3';
-import './App.scss';
-import crossfilter from 'crossfilter2';
-import ccssvv from './people.csv'
+<html>
+   <head>
+      <title>DC dashboard sample</title>
+      <link rel = "stylesheet" type = "text/css" href = "css/bootstrap.css">
+      <link rel = "stylesheet" type = "text/css" href = "css/dc.css"/>
+      
+      <style>
+         .dc-chart { font-size: 12px; }
+         .dc-grid-top { padding-left: 10px; font-size: 14px; font-weight: bold; }
+         .dc-grid-item { padding-left: 10px; font-size: 12px; font-weight: normal; }
+      </style>
 
+      <script src = "../node_modules/d3/dist/d3.js"></script>
+      <script src = "../node_modules/crossfilter2/crossfilter.js"></script>
+      <script src = "../node_modules/dc/dist/dc.js"></script>
+   </head>
+   
+   <body>
+      <div>
+         <div style = "width: 600px;">
+            <div id = "mystats" class = "dc-data-count" style = "float: right">
+               <span class = "filter-count"></span> selected out of <span
+                  class = "total-count"></span> | <a href = "javascript:dc.filterAll();
+                  dc.renderAll();">Reset All</a>
+            </div>
+         </div>
 
+         <div style = "clear: both; padding-top: 20px;">
+            <div>
+               <div id = "line"></div>
+               <div id = "pie"></div>
+            </div>
+         </div>
 
-function App() {
+         <div style = "clear: both">
+            <div class = "dc-data-grid" id = "mygrid"></div>
+         </div>
+      </div>
 
-  var barChart = dc.barChart('#line'); // , 'myChartGroup');
+      <script language = "javascript">
+         var barChart = dc.barChart('#line'); // , 'myChartGroup');
          var pieChart = dc.pieChart('#pie'); //, 'myChartGroup');
          var countChart = dc.dataCount("#mystats");
          var gridChart = dc.dataGrid("#mygrid");
 
          d3.csv("./people.csv", function(errors, people) {
             var mycrossfilter = crossfilter(people);
-
-            console.log(mycrossfilter);
 
             // age dimension
             var ageDimension = mycrossfilter.dimension(function(data) { 
@@ -33,7 +61,7 @@ function App() {
          barChart
             .width(400)
             .height(200)
-            .x(d3.scaleLinear().domain([15,70]))
+            .x(d3.scale.linear().domain([15,70]))
             .yAxisLabel("Count")
             .xAxisLabel("Age")
             .elasticY(true)
@@ -73,34 +101,6 @@ function App() {
          countChart.render();
          gridChart.render();
       });
-
-
-  // console.log(mycrossfilter);
-
-  return (
-    <>
-    {/* <div>
-         <div style = {{width: '600px;'}}>
-            <div id = "mystats" className = "dc-data-count" style = {{float: "right"}}>
-               <span className = "filter-count"></span> selected out of <span
-                  className = "total-count"></span> | <a href = "javascript:dc.filterAll();dc.renderAll();">Reset All</a>
-            </div>
-         </div>
-
-         <div style = {{clear: 'both', paddingTop: '20px'}}>
-            <div>
-               <div id = "line"></div>
-               <div id = "pie"></div>
-            </div>
-         </div>
-
-         <div style = {{clear: 'both'}}>
-            <div className = "dc-data-grid" id = "mygrid"></div>
-         </div>
-      </div> */}
-      </>
-  );
-  
-}
-
-export default App;
+      </script>
+   </body>
+</html>

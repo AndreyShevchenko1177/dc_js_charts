@@ -24,6 +24,9 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <!-- <script src = "js/d3.js"></script>
+      <script src = "js/crossfilter.js"></script>
+      <script src = "js/dc.js"></script> -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -38,5 +41,28 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <div>
+      <div style = "width: 600px;">
+         <div id = "mystats" class = "dc-data-count" style = "float: right">
+            <span class = "filter-count"></span> selected out of <span
+               class = "total-count"></span> | <a href = "javascript:dc.filterAll();
+               dc.renderAll();">Reset All</a>
+         </div>
+      </div>
+
+      <div style = "clear: both; padding-top: 20px;">
+         <div>
+            <div id = "line"></div>
+            <div id = "pie"></div>
+         </div>
+      </div>
+
+      <div style = "clear: both">
+         <div class = "dc-data-grid" id = "mygrid"></div>
+      </div>
+   </div>
+
+
   </body>
 </html>
